@@ -1,9 +1,3 @@
-var RepoCollection = Backbone.Collection.extend({
-  model: RepoListModel,
-
-  url: "https://sunilmore-rest-api.herokuapp.com/api/users"
-})
-
 var userModal = Backbone.View.extend({
   el: '#mymodal',
 
@@ -55,3 +49,4 @@ var userModal = Backbone.View.extend({
     }
   }
 });
+

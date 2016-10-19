@@ -1,10 +1,10 @@
 var UserRepoList = Backbone.Collection.extend({
-    model: RepolistView,
+    model: UserRepoListModel,
 
     initialize: function(model, options){
-      this.url = 'https://api.github.com/'+ options.id +'/repos'
+      console.log('collection fetching');
+      this.url = 'https://sunilmore-rest-api.herokuapp.com/api/users/'+ options.id;
     },
 
     url: this.url
-
 });
