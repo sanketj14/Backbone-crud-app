@@ -1,16 +1,15 @@
-var RepoEntries = Backbone.View.extend({
+var UserListView = Backbone.View.extend({
   el : '#RepoEntries',
 
 
   events: {
-    'click .viewrepo': 'viewRepo',
     'click .add': 'add',
     'click .edit': 'edit',
     'click .delete': 'delete'
   },
 
   initialize: function(){
-    this.modal = new userModal();
+    this.modal = new UpdateUserModalView();
   },
 
   add: function(){
@@ -20,7 +19,7 @@ var RepoEntries = Backbone.View.extend({
 
   delete: function(e){
     var id = $(e.target).parent().parent().data('id');
-    this.model = new RepoListModel({id: id});
+    this.model = new UserModel({id: id});
     this.model.destroy({
       success: function(){
         alert('user deleted!');
@@ -37,22 +36,14 @@ var RepoEntries = Backbone.View.extend({
     return false;
   },
 
-  viewRepo: function(event){
-    var id = $(event.currentTarget).data('id');
-    // console.log('navigating to repo, so route is calling')
-    // Backbone.history.navigate('repos/'+id, true);
-    var userdetail = new UserRepoTable();
-    userRepos.render(id);
-  },
-
   render: function(){
-    var repo = new RepoCollection();
-    repo.fetch({
-      success: function(repo){
+    var users = new UserCollection();
+    users.fetch({
+      success: function(users){
         console.log('API consumed, voila!');
         var source = $('#RepoTableTemplate').html();
         var template = Handlebars.compile(source);
-        this.$el.html(template(repo.toJSON()));
+        this.$el.html(template(users.toJSON()));
       }.bind(this)
     })
 

@@ -1,21 +1,15 @@
-var RepoCollection = Backbone.Collection.extend({
-  model: RepoListModel,
-
-  url: "https://sunilmore-rest-api.herokuapp.com/api/users"
-})
-
-var userModal = Backbone.View.extend({
+var UpdateUserModalView = Backbone.View.extend({
   el: '#mymodal',
 
   events: {
-    'click .saveuser': 'saveuser'
+    'click .saveuser': 'saveUser'
   },
 
   initialize: function(){
-    // this.model = new RepoListModel();
+    // this.model = new UserModel();
   },
 
-  saveuser: function(){
+  saveUser: function(){
     this.model.set({
       name: $('.username').val(),
       sex: $('.usergender').val()
@@ -23,13 +17,13 @@ var userModal = Backbone.View.extend({
     this.model.save({},{
       success: function(){
         this.$el.modal('hide');
-        userlist.render();
+        userListView.render();
       }.bind(this)
     })
   },
 
   render: function(id){
-    this.model = new RepoListModel({id: id});
+    this.model = new UserModel({id: id});
     console.log('id',id);
     if(!id){
       console.log('adding user');

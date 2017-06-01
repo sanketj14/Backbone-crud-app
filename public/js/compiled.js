@@ -5,33 +5,21 @@ var Router = Backbone.Router.extend({
     }
 });
 
-var RepoListModel = Backbone.Model.extend({
+var UserModel = Backbone.Model.extend({
+
   urlRoot: "https://sunilmore-rest-api.herokuapp.com/api/users",
   idAttribute: 'id'
-});
-
-var UserRepoListModel = Backbone.Model.extend({
 
 });
 
-var UserRepoList = Backbone.Collection.extend({
-    model: UserRepoListModel,
+var UserCollection = Backbone.Collection.extend({
 
-    initialize: function(model, options){
-      console.log('collection fetching');
-      this.url = 'https://sunilmore-rest-api.herokuapp.com/api/users/'+ options.id;
-    },
-
-    url: this.url
-});
-
-var RepoCollection = Backbone.Collection.extend({
-  model: RepoListModel,
-
+  model: UserModel,
   url: "https://sunilmore-rest-api.herokuapp.com/api/users"
-})
 
-var userModal = Backbone.View.extend({
+});
+
+var UpdateUserModal = Backbone.View.extend({
   el: '#mymodal',
 
   events: {
@@ -39,7 +27,7 @@ var userModal = Backbone.View.extend({
   },
 
   initialize: function(){
-    // this.model = new RepoListModel();
+    // this.model = new UserModel();
   },
 
   saveuser: function(){
@@ -56,7 +44,7 @@ var userModal = Backbone.View.extend({
   },
 
   render: function(id){
-    this.model = new RepoListModel({id: id});
+    this.model = new UserModel({id: id});
     console.log('id',id);
     if(!id){
       console.log('adding user');
@@ -83,19 +71,18 @@ var userModal = Backbone.View.extend({
   }
 });
 
-var RepoEntries = Backbone.View.extend({
+var UserList = Backbone.View.extend({
   el : '#RepoEntries',
 
 
   events: {
-    'click .viewrepo': 'viewRepo',
     'click .add': 'add',
     'click .edit': 'edit',
     'click .delete': 'delete'
   },
 
   initialize: function(){
-    this.modal = new userModal();
+    this.modal = new UpdateUserModal();
   },
 
   add: function(){
@@ -105,7 +92,7 @@ var RepoEntries = Backbone.View.extend({
 
   delete: function(e){
     var id = $(e.target).parent().parent().data('id');
-    this.model = new RepoListModel({id: id});
+    this.model = new UserModel({id: id});
     this.model.destroy({
       success: function(){
         alert('user deleted!');
@@ -122,16 +109,8 @@ var RepoEntries = Backbone.View.extend({
     return false;
   },
 
-  viewRepo: function(event){
-    var id = $(event.currentTarget).data('id');
-    // console.log('navigating to repo, so route is calling')
-    // Backbone.history.navigate('repos/'+id, true);
-    var userdetail = new UserRepoTable();
-    userRepos.render(id);
-  },
-
   render: function(){
-    var repo = new RepoCollection();
+    var repo = new UserCollection();
     repo.fetch({
       success: function(repo){
         console.log('API consumed, voila!');
@@ -145,38 +124,7 @@ var RepoEntries = Backbone.View.extend({
 
 });
 
-
-
-var UserRepoTable = Backbone.View.extend({
-  el: '#mymodal',
-
-  events: {
-    'click .back': 'home'
-  },
-
-  home: function(){
-    console.log('routing')
-    Backbone.history.navigate('/', true)
-  },
-
-  render: function(id){
-    var userrepolist = new UserRepoList([], {id: id});
-    // var model = new RepoListModel();
-    userrepolist.fetch({
-      success: function(userrepolist){
-        console.log('routing')
-        var source = $('#UserRepoTableTemplate').html();
-        var template = Handlebars.compile(source);
-        console.log('routing',userrepolist.toJSON());
-        this.$el.html(template(userrepolist.toJSON()));
-        this.$el.modal('show');
-      }.bind(this)
-    })
-  }
-});
-
-var userlist = new RepoEntries();
-var userRepos = new UserRepoTable();
+var userlist = new UserList();
 var router = new Router();
 
 router.on('route:home',function(){
