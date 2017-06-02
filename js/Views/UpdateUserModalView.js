@@ -11,8 +11,8 @@ var UpdateUserModalView = Backbone.View.extend({
 
   saveUser: function(){
     this.model.set({
-      name: $('.username').val(),
-      sex: $('.usergender').val()
+      name: $('.firstName').val(),
+      sex: $('.lastName').val()
     })
     this.model.save({},{
       success: function(){
@@ -42,8 +42,8 @@ var UpdateUserModalView = Backbone.View.extend({
           var template = Handlebars.compile(source);
           this.$el.html(template(this.model.attributes));
           this.$el.modal('show');
-          $('.username').val(this.model.attributes.name);
-          $('.usergender').val(this.model.attributes.sex)
+          $('.firstName').val(this.model.attributes.name);
+          $('.lastName').val(this.model.attributes.sex);
         }.bind(this)
       })
     }
