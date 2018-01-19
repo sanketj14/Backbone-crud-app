@@ -1,16 +1,12 @@
 {
   "hashMap": {
     "books": [
-      {
-        "mappedValueList": [
-          { "id": 1, "value": "Harry Potter and The Chamber of Secrets" },
-          { "id": 2, "value": "The Dark Tower" },
-          { "id": 3, "value": "The Alchemist" },
-          { "id": 4, "value": "Eloquent Ruby" },
-          { "id": 5, "value": "It" },
-          { "id": 6, "value": "Cryptex Seraphinium" }
-        ]
-      }
+      { "id": 1, "value": "Harry Potter and The Chamber of Secrets" },
+      { "id": 2, "value": "The Dark Tower" },
+      { "id": 3, "value": "The Alchemist" },
+      { "id": 4, "value": "Eloquent Ruby" },
+      { "id": 5, "value": "It" },
+      { "id": 6, "value": "Cryptex Seraphinium" }
     ]
   }
 }
